@@ -3,10 +3,8 @@ PLUGIN.Description = "Auto Login for Admins"
 PLUGIN.Version = "0.1.6.1"
 PLUGIN.Author = "greyhawk"
 
-print(PLUGIN.Title .. " (" .. PLUGIN.Version .. ") plugin loaded")
-
-local godmode = true
-local permaDay = true
+local godmode = false
+local permaDay = false
 
 function PLUGIN:Init()
 
@@ -105,7 +103,7 @@ function PLUGIN:OnUserConnect( netuser )
             rust.RunServerCommand("env.timescale 0" )
             rust.RunServerCommand("env.time 12" )
         end
-        if (true) then
+        if (false) then
             timer.Once(10, function () self:invis(netuser) end)
         end
     end

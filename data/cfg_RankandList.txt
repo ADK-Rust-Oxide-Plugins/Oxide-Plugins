@@ -1,5 +1,0 @@
-{
-  "UseBrackets":true,
-  "ShowinFront":true,
-  "ShowNameinChat":false
-}

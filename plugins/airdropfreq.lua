@@ -1,31 +1,41 @@
 PLUGIN.Title = "Airdrop Frequency Controller"
 PLUGIN.Description = "Control the frequencies of aidrops."
 PLUGIN.Author = "Chief Tiger"
-PLUGIN.Version = "2.5"
-
-print(PLUGIN.Title .. " (" .. PLUGIN.Version .. ") plugin loaded")
+PLUGIN.Version = "2.65"
 
 local PlayerClientAll = util.GetStaticPropertyGetter( Rust.PlayerClient, "All" )
 function PLUGIN:Init()
 	self:LoadConfig()
 	self:AddChatCommand("afc", self.cmdAFC)
 	
+	timer.Once( 25, function()
+		self.Env = util.GetStaticFieldGetter( Rust.EnvironmentControlCenter, "Singleton" )
+	end )
+	
 	if self.Config.realtimedrop > 0 then
 		local count = 1
-		timer.Repeat(self.Config.realtimedrop*60*60, function()
-			pclist = PlayerClientAll()
-			if type(self.Config.minplayers) == "number" and pclist.Count < self.Config.minplayers then
-				return
-			elseif type(self.Config.minplayers) == "table" and pclist.Count < self.Config.minplayers[1] then
-				return
+		timer.Repeat(math.max(self.Config.realtimedrop*60*60, 25), function()
+			if self.Env == nil then
+				self.Env = util.GetStaticFieldGetter( Rust.EnvironmentControlCenter, "Singleton" )
 			end
-			
-			if self.Config.dropmessage ~= "" then
-				rust.BroadcastChat(self.Config.dropmessage)
+		
+			if self.Env ~= nil then
+				pclist = PlayerClientAll()
+				local floortime = math.floor(tonumber(self.Env():GetTime()))
+				
+				if type(self.Config.minplayers) == "number" and pclist.Count < self.Config.minplayers then
+					return
+				elseif type(self.Config.minplayers) == "table" and pclist.Count < self.Config.minplayers[1] then
+					return
+				end
+				
+				if self.Config.dropmessage ~= "" then
+					rust.BroadcastChat(self.Config.dropmessage)
+				end
+				rust.RunServerCommand("airdrop.drop")
+				print("[airdropfreq(realtime)] Airdrop delivered at " .. floortime .. " in-game time. " .. (count*self.Config.realtimedrop*60*60) .. " hours after server start.")
+				count = count + 1
 			end
-			rust.RunServerCommand("airdrop.drop")
-			print("[airdropfreq(realtime)] Airdrop delivered at " .. floortime .. " in-game time. " .. (count*self.Config.realtimedrop*60*60) .. " hours after server start.")
-			count = count + 1
 		end)
 		return
 	end
@@ -48,54 +58,56 @@ function PLUGIN:Init()
 	self.RandomTime = {}
 	self:Randomize()
 
-	timer.Once( 25, function()
-		self.Env = util.GetStaticFieldGetter( Rust.EnvironmentControlCenter, "Singleton" )
-	end )
-
 	local hasdropped = {}
 	local pclist
 	local daydelay = self.Config.daydelay
 	local waitone = -1
 	timer.Repeat(30, function()
-		pclist = PlayerClientAll()
-		local floortime = math.floor(tonumber(self.Env():GetTime()))
+		if self.Env == nil then
+			self.Env = util.GetStaticFieldGetter( Rust.EnvironmentControlCenter, "Singleton" )
+		end
 		
-		if type(self.Config.minplayers) == "number" and pclist.Count < self.Config.minplayers then
-			return
-		elseif type(self.Config.minplayers) == "table" and pclist.Count < self.Config.minplayers[1] then
-			return
-		elseif daydelay > 0 then
-			if floortime == self.Config.lasthour then
-				daydelay = daydelay - 1
-				if daydelay == 0 then
-					waitone = floortime
+		if self.Env ~= nil then
+			pclist = PlayerClientAll()
+			local floortime = math.floor(tonumber(self.Env():GetTime()))
+			
+			if type(self.Config.minplayers) == "number" and pclist.Count < self.Config.minplayers then
+				return
+			elseif type(self.Config.minplayers) == "table" and pclist.Count < self.Config.minplayers[1] then
+				return
+			elseif daydelay > 0 then
+				if floortime == self.Config.lasthour then
+					daydelay = daydelay - 1
+					if daydelay == 0 then
+						waitone = floortime
+					end
 				end
+				return
 			end
-			return
-		end
-		
-		if floortime == self.Config.firsthour then
-			waitone = -1
-		end
+			
+			if floortime == self.Config.firsthour then
+				waitone = -1
+			end
 
-		if hasdropped[floortime] == nil and waitone < floortime then
-			if self.RandomTime[floortime] then
-				rust.RunServerCommand("airdrop.drop")
-				hasdropped[floortime] = true
-				if self.Config.dropmessage ~= "" then
-					rust.BroadcastChat(self.Config.dropmessage)
+			if hasdropped[floortime] == nil and waitone < floortime then
+				if self.RandomTime[floortime] then
+					rust.RunServerCommand("airdrop.drop")
+					hasdropped[floortime] = true
+					if self.Config.dropmessage ~= "" then
+						rust.BroadcastChat(self.Config.dropmessage)
+					end
+					print("[airdropfreq] Airdrop delivered at " .. floortime .. ".")
 				end
-				print("[airdropfreq] Airdrop delivered at " .. floortime .. ".")
 			end
-		end
-		
-		local count = 0
-		for _ in pairs(hasdropped) do count = count + 1 end
-		
-		if ((floortime > self.Config.lasthour and self.Config.lasthour ~= 23) or (floortime == 0 and self.Config.lasthour == 23)) and count > 0 then
-			daydelay = self.Config.daydelay
-			hasdropped = {}
-			self:Randomize()
+			
+			local count = 0
+			for _ in pairs(hasdropped) do count = count + 1 end
+			
+			if ((floortime > self.Config.lasthour and self.Config.lasthour ~= 23) or (floortime == 0 and self.Config.lasthour == 23)) and count > 0 then
+				daydelay = self.Config.daydelay
+				hasdropped = {}
+				self:Randomize()
+			end
 		end
 	end)
 end
