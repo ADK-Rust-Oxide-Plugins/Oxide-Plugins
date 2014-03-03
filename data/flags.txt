@@ -1,0 +1,1 @@
+{"Groups":{"everyone":{"Flags":[],"Name":"everyone"},"owners":{"Flags":["rcon"],"Name":"owners"},"admins":{"Flags":[],"Name":"admins"}},"Users":[]}
