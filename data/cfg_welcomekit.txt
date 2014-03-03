@@ -1,0 +1,194 @@
+{
+    "plugin_options": {
+        "enable_playerkit": true,
+        "enable_adminkit": false,
+        "enable_vipkit": false,
+        "displaymessages": true
+    },
+    "playerkit": {
+        "message": "PlayerKit received, take a look at your Inventory!",
+        "respawn_equipagain": true,
+        "respawn_limitkits": true,
+        "respawn_kitmaxlimit": 5,
+        "respawn_kitonsuicide": false,
+        "respawn_kitatcamp": true,
+        "respawn_kitonreconnect": false,
+        "removerock": true,
+        "removebandage": true,
+        "removetorch": false,
+        "items": [
+            {
+                "name": "Stone Hatchet",
+                "inbelt": true
+            },
+            {
+                "name": "Camp Fire",
+                "blockonrespawn": true
+            },
+            {
+                "name": "Sleeping Bag",
+                "blockonrespawn": true
+            },
+            {
+                "name": "Hunting Bow",
+                "inbelt": true,
+                "blockatcamp": true
+            },
+            {
+                "name": "Arrow",
+                "amount": 10,
+                "blockatcamp": true
+            },
+            {
+                "name": "Wood Storage Box",
+                "blockonrespawn": true
+            },
+            {
+                "name": "Wood Shelter",
+                "blockonrespawn": true
+            },
+            {
+                "name": "Wooden Door",
+                "blockonrespawn": true
+            },
+            {
+                "name": "Small Medkit",
+                "amount": 2,
+                "inbelt": true,
+                "blockoninitialkit": true
+            },
+            {
+                "name": "Large Medkit",
+                "amount": 2,
+                "inbelt": true,
+                "blockonrespawn": true
+            },
+            "Cloth Helmet",
+            "Cloth Vest",
+            "Cloth Pants",
+            "Cloth Boots",
+            {
+                "name": "Small Rations",
+                "amount": 10,
+                "inbelt": true,
+                "blockonrespawn": true
+            },
+            {
+                "name": "Cooked Chicken Breast",
+                "amount": 10,
+                "inbelt": true,
+                "blockoninitialkit": true
+            }
+        ]
+    },
+    "adminkit": {
+        "message": "AdminKit received, take a look at your Inventory!",
+        "respawn_equipagain": true,
+        "respawn_limitkits": false,
+        "respawn_kitmaxlimit": 5,
+        "respawn_kitonsuicide": true,
+        "respawn_kitatcamp": true,
+        "respawn_kitonreconnect": true,
+        "removerock": true,
+        "removebandage": true,
+        "removetorch": true,
+        "items": [
+            {
+                "name": "Hatchet",
+                "inbelt": true
+            },
+            "P250",
+            {
+                "name": "9mm Ammo",
+                "amount": 55
+            },
+            {
+                "name": "M4",
+                "inbelt": true,
+                "blockonreconnect": true
+            },
+            {
+                "name": "556 Ammo",
+                "amount": 55,
+                "blockonreconnect": true
+            },
+            "Shotgun",
+            {
+                "name": "Shotgun Shells",
+                "amount": 55
+            },
+            {
+                "name": "Large Medkit",
+                "amount": 5,
+                "inbelt": true,
+                "nostacking": true
+            },
+            "Kevlar Helmet",
+            "Kevlar Vest",
+            "Kevlar Pants",
+            "Kevlar Boots",
+            {
+                "name": "Small Rations",
+                "amount": 10,
+                "inbelt": true
+            },
+            {
+                "name": "Flare",
+                "amount": 3,
+                "inbelt": true,
+                "nostacking": true
+            },
+            {
+                "name": "Anti-Radiation Pills",
+                "amount": 10,
+                "inbelt": true
+            }
+        ]
+    },
+    "vipkit": {
+        "message": "VIPKit received, take a look at your Inventory!",
+        "required_flag": "getvipkit",
+        "respawn_equipagain": true,
+        "respawn_limitkits": false,
+        "respawn_kitmaxlimit": 5,
+        "respawn_kitonsuicide": false,
+        "respawn_kitatcamp": true,
+        "respawn_kitonreconnect": false,
+        "removerock": true,
+        "removebandage": true,
+        "removetorch": false,
+        "items": [
+            {
+                "name": "Hatchet",
+                "inbelt": true
+            },
+            "Revolver",
+            {
+                "name": "9mm Ammo",
+                "amount": 40
+            },
+            {
+                "name": "Pipe Shotgun",
+                "inbelt": true
+            },
+            {
+                "name": "Handmade Shell",
+                "amount": 20
+            },
+            {
+                "name": "Large Medkit",
+                "amount": 3,
+                "inbelt": true
+            },
+            "Leather Helmet",
+            "Leather Vest",
+            "Leather Pants",
+            "Leather Boots",
+            {
+                "name": "Small Rations",
+                "amount": 5,
+                "inbelt": true
+            }
+        ]
+    }
+}

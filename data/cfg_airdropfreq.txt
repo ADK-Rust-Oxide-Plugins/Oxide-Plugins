@@ -1,0 +1,10 @@
+{
+  "minplayers":5,
+  "dropmessage":"=ADK= Air Drop in affect",
+  "daydelay":0,
+  "tierdrop":1,
+  "drops":5,
+  "lasthour":16,
+  "realtimedrop":0,
+  "firsthour":8
+}
