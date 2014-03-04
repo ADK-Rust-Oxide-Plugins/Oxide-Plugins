@@ -1,1 +1,1 @@
-{"ChatName":"Oxide","ShowSuicide":true,"ShowWeapon":true,"SendAllChat":true,"AdminOnly":false,"SendNotice":true}
+{"AdminOnly":false,"ShowWeapon":true,"ChatName":"Oxide","ShowSuicide":false,"SendAllChat":true,"SendNotice":false}

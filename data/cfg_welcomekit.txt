@@ -1,7 +1,7 @@
 {
     "plugin_options": {
         "enable_playerkit": true,
-        "enable_adminkit": false,
+        "enable_adminkit": true,
         "enable_vipkit": false,
         "displaymessages": true
     },

@@ -1,9 +1,9 @@
 {
-  "reservedslots":5,
-  "welcomenotice":"Welcome to the server %s! Type /help for a list of commands.",
-  "helptext":["Welcome to the server!","This server is powered by the Oxide Modding API for Rust.","Use /who to see how many players are online."],
-  "showdisconnectedmessage":true,
   "chatname":"Oxmin",
+  "showdisconnectedmessage":true,
+  "helptext":["Welcome to the server!","This server is powered by the Oxide Modding API for Rust.","Use /who to see how many players are online."],
   "showwelcomenotice":true,
+  "welcomenotice":"Welcome to the server %s! Type /help for a list of commands.",
+  "reservedslots":5,
   "showconnectedmessage":true
 }
