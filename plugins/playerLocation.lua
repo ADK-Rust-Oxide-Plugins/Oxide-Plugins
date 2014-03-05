@@ -1,11 +1,7 @@
- 
-PLUGIN.Title = "/Location and Auto Tracker"
+PLUGIN.Title = "/Location and Autotracker"
 PLUGIN.Description = "Allows Players get their location Coords and see in realtime their position on rustnuts.com"
 PLUGIN.Author = "Purely Luck (Rustnuts.com)"
-PLUGIN.Version = "6.0.3"
-
-print(PLUGIN.Title .. " (" .. PLUGIN.Version .. ") plugin loaded")
-
+PLUGIN.Version = "6.1.0"
 --Server initialization of the plugin
 function PLUGIN:Init()
 	self.X = 0;
@@ -86,14 +82,26 @@ if netuser:CanAdmin() then
     local Port = NetCullListenPort:Invoke( nil, nil );
 	local name  = Rust.server.hostname
 	local playerID = rust.GetUserID( netuser );
-	local b = webrequest.Send(( "http://api.rustnuts.com/registerServer?&serverIP=" .. ipAddrStr .. ":" .. Port .. "&adminId="..playerID.."&serverName="..name), function( code, response )
-						-- Do something with the result here! Or, you could forward it into the plugin like so
-						--self:callbackWebrequest( code, response )
+	rust.SendChatToUser( netuser, "Handshaking with rustnuts.com...");
+	local b = webrequest.Send(( "http://api.rustnuts.com/handshake?&serverIP=" .. ipAddrStr .. ":" .. Port .. "&adminId="..playerID.."&serverName="..name), function( code, response )						
+						self:RegisterServer(code, response, ipAddrStr, Port, playerID, name, netuser);
 			end )
-	rust.SendChatToUser( netuser, "You have registered your server at rustnuts.com under your current steam id");
 	else
 	rust.SendChatToUser( netuser, "You have to be logged in as admin to register");
 	end
+end
+
+function PLUGIN:RegisterServer(code, response, ipAddrStr, Port, playerID, name, netuser)
+	local handshakeCode = json.decode(response);
+	if (handshakeCode ~= "") then
+	rust.SendChatToUser( netuser, "Handshaking complete. Sending server info...");
+	local b = webrequest.Send(( "http://api.rustnuts.com/registerServer?&handshake=".. handshakeCode .."&serverIP=" .. ipAddrStr .. ":" .. Port .. "&adminId="..playerID.."&serverName="..name), function( code, response )
+				rust.SendChatToUser( netuser, "Server registered with rustnuts.com under your current steam id.");		
+			end )
+	else
+	rust.SendChatToUser( netuser, "Handshaking failed");
+	end
+	
 end
 --Timed track all available players
 function PLUGIN:TrackAllAvailablePlayers()

@@ -96,16 +96,6 @@ function PLUGIN:OnUserConnect( netuser )
     if (data.isAdmin) then
         netuser:SetAdmin(true)
         rust.Notice( netuser, "You are admin!" )
-        if (godmode) then
-            rust.RunServerCommand("dmg.godmode true")
-        end
-        if (permaDay) then
-            rust.RunServerCommand("env.timescale 0" )
-            rust.RunServerCommand("env.time 12" )
-        end
-        if (false) then
-            timer.Once(10, function () self:invis(netuser) end)
-        end
     end
 end
 
