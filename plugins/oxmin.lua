@@ -40,6 +40,15 @@ local FLAG_CANCALLAIRDROP = oxmin.AddFlag( "cancallairdrop" )
 local FLAG_RESERVED = oxmin.AddFlag( "reserved" )
 local FLAG_CANDESTROY = oxmin.AddFlag( "candestroy" )
 
+
+-- *******************************************
+-- ADK FLAG ADDITIONS
+-- *******************************************
+local FLAG_CANADMINGEAR = oxmin.AddFlag( "canadmingear" )
+local FLAG_CANNOTICE = oxmin.AddFlag( "cannotice" )
+local FLAG_CANTIME = oxmin.AddFlag( "cantime" )
+local FLAG_CANAHELP = oxmin.AddFlag( "ahelp" )
+
 -- *******************************************
 -- PLUGIN:Init()
 -- Initialises the Oxmin plugin
@@ -78,12 +87,22 @@ function PLUGIN:Init()
 	self:AddOxminChatCommand( "lua", { FLAG_CANLUA }, self.cmdLua )
 	self:AddOxminChatCommand( "god", { FLAG_CANGOD }, self.cmdGod )
 	self:AddOxminChatCommand( "airdrop", { FLAG_CANCALLAIRDROP }, self.cmdAirdrop )
+	
 	self:AddOxminChatCommand( "give", { FLAG_CANGIVE }, self.cmdGive )
 	self:AddOxminChatCommand( "help", { }, self.cmdHelp )
 	self:AddOxminChatCommand( "who", { }, self.cmdWho )
 	self:AddOxminChatCommand( "tp", { FLAG_CANTELEPORT }, self.cmdTeleport )
 	self:AddOxminChatCommand( "bring", { FLAG_CANTELEPORT }, self.cmdBring )
 	self:AddOxminChatCommand( "destroy", { FLAG_CANDESTROY }, self.cmdDestroy )
+	
+-- *******************************************
+-- ADK CHAT COMMANDS ADDITIONS
+-- *******************************************
+	self:AddOxminChatCommand( "timeday", { FLAG_CANTIME }, self.cmdTimeday )
+	self:AddOxminChatCommand( "timenight", { FLAG_CANTIME }, self.cmdTimenight )
+	self:AddOxminChatCommand( "admingear", { FLAG_CANADMINGEAR }, self.cmdAdminGear )
+	self:AddOxminChatCommand( "ahelp", { FLAG_CANAHELP }, self.cmdahelp )
+	self:AddOxminChatCommand( "notice", { FLAG_CANNOTICE }, self.cmdnotice )
 	
 	-- Add console commands
 	self:AddCommand( "oxmin", "giveflag", self.ccmdGiveFlag )
@@ -106,7 +125,22 @@ function PLUGIN:LoadDefaultConfig()
 	{
 		"Welcome to the server!",
 		"This server is powered by the Oxide Modding API for Rust.",
-		"Use /who to see how many players are online."
+		"Use /who to see how many players are online.",
+		"Use /ahelp while logged in the server as a admin to see all admin commands."
+	}
+	self.Config.ahelptext =
+	{
+		"The Oxmin Admin commands for this plugin are!",
+		"Use /kick 'player name' Requires flag 'cankick' Immediately kicks the target player.",
+		"Use /ban 'player name' Requires flag 'canban' Immediately kicks and bans the target player permanently.",
+		"Use /unban 'player name' Requires flag 'canban' Unbans the target player.",
+		"Use /god Requires flag 'cangod' Gives the caller the 'godmode' flag.",
+		"Use /airdrop Requires flag 'cancallairdrop' Calls in an airdrop.",
+		"Use /give 'item name' 'quantity' Requires flag 'cangive' Gives the caller the specified item.",
+		"Use /tp 'player name' Requires flag 'canteleport' Teleports the caller to the target player.",
+		"Use /notice 'MESSAGE' Requires flag 'cannotice' Sends a server message.",
+		"Use /timeday Requires flag 'cantime' Changes time of day to day.",
+		"Use /timenight Requires flag 'cantime' Changes time of day to night."
 	}
 end
 
@@ -419,10 +453,45 @@ function PLUGIN:ModifyDamage( takedamage, damage )
 			local netuser = rust.NetUserFromNetPlayer( netplayer )
 			if (netuser) then
 				if (self:HasFlag( netuser, FLAG_GODMODE, true )) then
-					--print( "Damage denied" )
-					damage.amount = 0
-					return damage
-				end
+                    print("1Got here..."..tostring(damage.status))
+                    --print( "Damage denied" )
+                    damage.amount = 0
+                   
+                    print("2Got here..."..tostring(damage.status))
+
+                    local oxmindamagefixed = function()
+                        local controllable = netuser.playerClient.controllable
+                        local char = controllable:GetComponent( "Character" )
+                        local OxminFallDamage = cs.gettype( "FallDamage, Assembly-CSharp" )
+                        local OxminFD = char:GetComponent( OxminFallDamage )
+                        OxminFD:ClearInjury( )
+
+                        local OxminHumanBodyTakeDamageType = cs.gettype( "HumanBodyTakeDamage, Assembly-CSharp" )
+                        if (OxminHumanBodyTakeDamageType == nil) then
+                            print( "OxminHumanBodyTakeDamageType is nil, please report to developer" )
+                            return
+                        end
+
+                        local HBTD = char:GetComponent( OxminHumanBodyTakeDamageType )
+                        -- local hb = netuser.playerClient.rootControllable.idMain:GetLocal()
+                        if (HBTD == nil) then
+                            print( "HBTD is nil, please report this to the developer")
+                            return
+                        end
+                        HBTD:Bandage( 1000.0 )
+                        HBTD:HealOverTime( 30.0 )
+                    end
+
+                    timer.Once( 0.25, oxmindamagefixed )   
+
+					print("3Got here..."..tostring(damage.status))
+
+                    damage.status = LifeStatus.IsAlive
+
+					print("4Got here..."..tostring(damage.status))
+                   
+                    return damage
+                end
 			end
 		end
 	end
@@ -645,4 +714,62 @@ local function TraceEyes( netuser )
 end
 function PLUGIN:cmdDestroy( netuser, args )
 	
+end
+
+-- *******************************************
+-- ADK Gamers Additions
+-- *******************************************
+
+-- *******************************************
+-- Broadcasts a Server Notification 
+-- *******************************************
+function PLUGIN:cmdNotice( netuser, cmd, args ) 
+		rust.RunServerCommand ( "notice.popupall" .. '"' .. args[1] .. '"' )
+		rust.SendChatToUser ( netuser, "Message Sent:" .. args[1] )
+end
+
+-- *******************************************
+-- Time functions day and night commands
+-- *******************************************
+function PLUGIN:cmdTimeday( netuser, cmd, args )
+
+    local dayva = "env.time 10"
+    local daytext = "Time set to day"
+    rust.RunServerCommand (dayva)
+    rust.BroadcastChat (daytext)
+end
+function PLUGIN:cmdTimenight( netuser, cmd, args )
+
+    local nightva = "env.time 23"
+    local nighttext = "Time set to night"
+    rust.RunServerCommand (nightva)
+    rust.BroadcastChat (nighttext)
+end
+
+-- *******************************************
+--  Admin Gear Command
+-- *******************************************
+
+function PLUGIN:cmdAdminGear( netuser, cmd, args )
+	local InvisibleHelmet =  rust.GetDatablockByName( "Invisible Helmet" )
+	local InvisibleVest = rust.GetDatablockByName( "Invisible Vest" )
+	local InvisiblePants = rust.GetDatablockByName( "Invisible Pants" )
+	local InvisibleBoots = rust.GetDatablockByName( "Invisible Boots" )
+	local inv = netuser.playerClient.rootControllable.idMain:GetComponent( "Inventory" )
+	invitem1 = inv:AddItemAmount( InvisibleHelmet, 1 )
+	invitem2 = inv:AddItemAmount( InvisibleVest, 1 )
+	invitem3 = inv:AddItemAmount( InvisiblePants, 1 )
+	invitem4 = inv:AddItemAmount( InvisibleBoots, 1 )
+	rust.SendChatToUser( netuser, "Admin Gear has been issued" )
+end
+
+-- *******************************************
+-- Admin Help Files
+-- *******************************************
+
+function PLUGIN:cmdahelp( netuser, args )
+	for i=1, #self.Config.helptext do
+		rust.SendChatToUser( netuser, self.Config.ahelptext[i] )
+	end
+	plugins.Call( "SendHelpText", netuser )
 end

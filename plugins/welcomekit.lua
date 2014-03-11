@@ -1,19 +1,20 @@
-PLUGIN.Title = "Welcome Kit"
-PLUGIN.Version = "2.0"
+PLUGIN.Title = "WelcomeKit"
+PLUGIN.Version = "2.05"
 PLUGIN.Description = "Automatically hand over a customizable WelcomeKit to new players!"
 PLUGIN.Author = "FeuerSturm91"
-
-print(PLUGIN.Title .. " (" .. PLUGIN.Version .. ") plugin loaded")
 
 function PLUGIN:Init()
 	self:SetupDatabase()
 	self:AddCommand( "welcomekit", "reload", self.ccmdReload )
 	self:AddCommand( "welcomekit", "cleardatabase", self.ccmdClearDatabase )
+	print( self.Title .. " v" .. self.Version .. ": successfully initialized! Enjoy!" )
+end
+
+function PLUGIN:PostInit()
 	flags_plugin = plugins.Find( "flags" )
 	if(flags_plugin) then print(self.Title .. ": Flags support activated - Admins are recognized by flag 'kick'!") end
 	oxminplugin = plugins.Find( "oxmin" )
 	if(oxminplugin) then print(self.Title .. ": Oxmin support activated - Admins are recognized by flag 'FLAG_CANKICK'!") end
-	print( self.Title .. " v" .. self.Version .. ": successfully initialized! Enjoy!" )
 end
 
 function PLUGIN:SetupDatabase()
@@ -231,10 +232,11 @@ end
 function PLUGIN:isAdmin(netuser)
 	if (netuser:CanAdmin()) then return true end
 	if(oxminplugin) then
+		local FLAG_CANKICK = 3
 		if (oxminplugin:HasFlag(netuser, FLAG_CANKICK)) then return true end
 	end
 	if(flags_plugin) then
-		local steamID = flags_plugin:CommunityIDToSteamIDFix(tonumber(rust.GetUserID(netuser)))
+		local steamID = rust.CommunityIDToSteamID(tonumber(rust.GetUserID(netuser)))
 		if (flags_plugin:HasFlag(steamID, "kick")) then return true end
 	end
 	return false

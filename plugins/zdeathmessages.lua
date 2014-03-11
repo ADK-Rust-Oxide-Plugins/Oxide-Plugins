@@ -1,4 +1,4 @@
-PLUGIN.Title = "Death Messages"
+PLUGIN.Title = "deathmessages"
 PLUGIN.Description = "Send global message on player death."
 PLUGIN.Version = "0.7"
 PLUGIN.Author = "Erekel"

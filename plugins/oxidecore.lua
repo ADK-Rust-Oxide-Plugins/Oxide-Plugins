@@ -7,7 +7,7 @@
 PLUGIN.Title = "Oxide Core"
 PLUGIN.Description = "Abstracts many hooks into a much improved API for other plugins to use"
 PLUGIN.Author = "thomasfn"
-PLUGIN.Version = "1.16"
+PLUGIN.Version = "1.17"
 
 -- Load some enums
 typesystem.LoadEnum( Rust.NetError, "NetError" )
@@ -16,7 +16,7 @@ typesystem.LoadEnum( System.Reflection.BindingFlags, "BindingFlags" )
 typesystem.LoadEnum( Rust.LifeStatus, "LifeStatus" )
 
 -- Oxide version
-PLUGIN.OxideVersion = "Oxide 1.16"
+PLUGIN.OxideVersion = "Oxide " .. PLUGIN.Version
 PLUGIN.RustProtocolVersion = 0x42d
 
 -- Get some other functions
@@ -209,7 +209,7 @@ function PLUGIN:OnDoorToggle( door, timestamp, controllable )
 			print( "eyesOrigin was a string! (charcomponent = " .. tostring( charcomponent ) .. " - " .. (charcomponent and charcomponent:GetType().Name or "") .. ")" )
 			origin = GetEyesOrigin( charcomponent )
 		else
-			
+			origin = GetEyesOrigin( charcomponent ) -- LMP fixes for door swinging both ways, probably could also use charcomponent.eyesOrigin but this is safer.
 		end
 	else
 		origin = controllable.transform.position
