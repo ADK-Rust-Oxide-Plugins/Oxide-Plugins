@@ -1,7 +1,7 @@
 {
     "plugin_options": {
         "enable_playerkit": true,
-        "enable_adminkit": true,
+        "enable_adminkit": false,
         "enable_vipkit": false,
         "displaymessages": true
     },
@@ -14,7 +14,6 @@
         "respawn_kitatcamp": true,
         "respawn_kitonreconnect": false,
         "removerock": true,
-        "removebandage": true,
         "removetorch": false,
         "items": [
             {
@@ -24,44 +23,49 @@
             {
                 "name": "Camp Fire",
                 "blockonrespawn": true
+				"blockatcamp": true
             },
             {
                 "name": "Sleeping Bag",
                 "blockonrespawn": true
+				"blockatcamp": true
             },
             {
                 "name": "Hunting Bow",
                 "inbelt": true,
-                "blockatcamp": true
+
             },
             {
                 "name": "Arrow",
                 "amount": 10,
-                "blockatcamp": true
+
             },
             {
                 "name": "Wood Storage Box",
                 "blockonrespawn": true
+				"blockatcamp": true
             },
             {
                 "name": "Wood Shelter",
                 "blockonrespawn": true
+				"blockatcamp": true
             },
             {
                 "name": "Wooden Door",
                 "blockonrespawn": true
+				"blockatcamp": true
             },
             {
                 "name": "Small Medkit",
                 "amount": 2,
                 "inbelt": true,
-                "blockoninitialkit": true
+
             },
             {
                 "name": "Large Medkit",
-                "amount": 2,
+                "amount": 5,
                 "inbelt": true,
-                "blockonrespawn": true
+
             },
             "Cloth Helmet",
             "Cloth Vest",
@@ -71,13 +75,14 @@
                 "name": "Small Rations",
                 "amount": 10,
                 "inbelt": true,
-                "blockonrespawn": true
+
             },
             {
                 "name": "Cooked Chicken Breast",
                 "amount": 10,
                 "inbelt": true,
                 "blockoninitialkit": true
+				"blockatcamp": true
             }
         ]
     },
@@ -94,39 +99,14 @@
         "removetorch": true,
         "items": [
             {
-                "name": "Hatchet",
+                "name": "Uber Hatchet",
                 "inbelt": true
             },
-            "P250",
-            {
-                "name": "9mm Ammo",
-                "amount": 55
-            },
-            {
-                "name": "M4",
-                "inbelt": true,
-                "blockonreconnect": true
-            },
-            {
-                "name": "556 Ammo",
-                "amount": 55,
-                "blockonreconnect": true
-            },
-            "Shotgun",
-            {
-                "name": "Shotgun Shells",
-                "amount": 55
-            },
-            {
-                "name": "Large Medkit",
-                "amount": 5,
-                "inbelt": true,
-                "nostacking": true
-            },
-            "Kevlar Helmet",
-            "Kevlar Vest",
-            "Kevlar Pants",
-            "Kevlar Boots",
+            
+            "Invisible Helmet",
+            "Invisible Vest",
+            "Invisible Pants",
+            "Invisible Boots",
             {
                 "name": "Small Rations",
                 "amount": 10,

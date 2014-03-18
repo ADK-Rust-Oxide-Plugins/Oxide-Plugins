@@ -1,5 +1,5 @@
 {
-  "HomesTimer":10,
+  "HomesTimer":30,
   "SetHomesPrice":0,
   "HomesAllowed":1,
   "TPHomesPrice":0

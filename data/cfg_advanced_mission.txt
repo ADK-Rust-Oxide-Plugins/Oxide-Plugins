@@ -1,0 +1,231 @@
+{
+    "conf": {
+        "version": "1.0",
+        "chatname": "mission ",
+        "command": "mission",
+        "text": {
+            "plural": "missions",
+            "single": "mission",
+            "wolf": {
+                "plural": "wolves",
+                "single": "wolf"
+            },
+            "bear": {
+                "plural": "bears",
+                "single": "bear"
+            },
+            "zombie": {
+                "plural": "red animals",
+                "single": "red animal"
+            }
+        }
+    },
+    "messages": {
+        "broadcast": "Try out our missions! Type /mission to show commands available"
+    },
+    "missions": {
+        "boar": [
+            {
+                "item": "Wood Planks",
+                "kills": 100,
+                "amount": 250,
+                "name": "planks"
+            },
+            {
+                "item": "Metal Door",
+                "kills": 20,
+                "amount": 2,
+                "name": "door"
+            },
+            {
+                "item": "Arrow",
+                "kills": 20,
+                "amount": 20,
+                "name": "ammo"
+            },
+            {
+                "item": "Laser Sight",
+                "kills": 100,
+                "amount": 1,
+                "name": "laser"
+            }
+        ],
+        "deer": [
+            {
+                "item": "Can of Tuna",
+                "kills": 2,
+                "amount": 5,
+                "name": "tuna"
+            },
+            {
+                "item": "Small Water Bottle",
+                "kills": 10,
+                "amount": 1,
+                "name": "water"
+            },
+            {
+                "item": "Silencer",
+                "kills": 200,
+                "amount": 1,
+                "name": "silencer"
+            }
+        ],
+        "rabbit": [
+            {
+                "item": "9mm Pistol",
+                "kills": 30,
+                "amount": 1,
+                "name": "pistol"
+            },
+            {
+                "item": "Bolt Action Rifle",
+                "kills": 50,
+                "amount": 1,
+                "name": "rifle"
+            },
+            {
+                "item": "Shotgun Shells",
+                "kills": 25,
+                "amount": 100,
+                "name": "ammo"
+            }
+        ],
+        "chicken": [
+            {
+                "item": "Research Kit 1",
+                "kills": 30,
+                "amount": 1,
+                "name": "research"
+            },
+            {
+                "item": "Shotgun",
+                "kills": 50,
+                "amount": 1,
+                "name": "shotgun"
+            },
+            {
+                "item": "556 Ammo",
+                "kills": 25,
+                "amount": 100,
+                "name": "ammo"
+            }
+        ],
+        "wolf": [
+            {
+                "item": "Small Rations",
+                "kills": 50,
+                "amount": 1,
+                "name": "rations"
+            },
+            {
+                "item": "Can of Tuna",
+                "kills": 1,
+                "amount": 5,
+                "name": "tuna"
+            },
+            {
+                "kills": 20,
+                "money": 50,
+                "name": "money20"
+            },
+            {
+                "item": "Supply Signal",
+                "kills": 500,
+                "amount": 1,
+                "name": "supply"
+            },
+            {
+                "item": "Anti-Radiation Pills",
+                "kills": 10,
+                "amount": 20,
+                "name": "antirad"
+            },
+            {
+                "item": "Holo sight",
+                "kills": 100,
+                "amount": 1,
+                "name": "holo"
+            },
+            {
+                "item": "Flashlight Mod",
+                "kills": 100,
+                "amount": 1,
+                "name": "flash"
+            },
+            {
+                "item": "Rad Suit Boots",
+                "kills": 20,
+                "amount": 1,
+                "name": "boots"
+            },
+            {
+                "item": "Rad Suit Helmet",
+                "kills": 30,
+                "amount": 1,
+                "name": "helmet"
+            },
+            {
+                "item": "Rad Suit Vest",
+                "kills": 50,
+                "amount": 1,
+                "name": "vest"
+            },
+            {
+                "item": "Rad Suit Pants",
+                "kills": 40,
+                "amount": 1,
+                "name": "pants"
+            }
+        ],
+        "bear": [
+            {
+                "item": "Anti-Radiation Pills",
+                "kills": 10,
+                "amount": 20,
+                "name": "antirad"
+            },
+            {
+                "kills": 20,
+                "money": 50,
+                "name": "money20"
+            },
+            {
+                "item": "Supply Signal",
+                "kills": 500,
+                "amount": 1,
+                "name": "supply"
+            },
+            {
+                "item": "Large Wood Storage",
+                "kills": 40,
+                "amount": 1,
+                "name": "storage"
+            },
+            {
+                "item": "Leather Boots",
+                "kills": 20,
+                "amount": 1,
+                "name": "boots"
+            },
+            {
+                "item": "Leather Helmet",
+                "kills": 30,
+                "amount": 1,
+                "name": "helmet"
+            },
+            {
+                "item": "Leather Vest",
+                "kills": 50,
+                "amount": 1,
+                "name": "vest"
+            },
+            {
+                "item": "Leather Pants",
+                "kills": 40,
+                "amount": 1,
+                "name": "pants"
+            }
+        ]
+    }
+}
+ 

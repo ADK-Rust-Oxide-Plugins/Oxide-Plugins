@@ -1,0 +1,4 @@
+{
+  "StarterRock":"true",
+  "BetterItems":["Hatchet","Pick Axe","Stone Hatchet"]
+}

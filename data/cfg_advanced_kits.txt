@@ -1,0 +1,44 @@
+{
+  "chatname":"kit ",
+  "kits":{
+    "starter":{
+      "items":["Stone Hatchet",{
+          "item":"Cooked Chicken Breast",
+          "amount":3
+        }],
+      "description":"Basic things you need! (maximum 5 times)",
+      "max":5,
+      "cooldown":1
+    },
+    "basic":{
+      "items":["Wood Shelter","Cloth Pants","Wooden Door","Camp Fire",{
+          "item":"Cooked Chicken Breast",
+          "amount":3
+        }],
+      "description":"Gives you some comfort (maximum 2 times)!",
+      "max":2,
+      "cooldown":1
+    },
+    "help":{
+      "admin":true,
+      "items":["Bed",{
+          "item":"Wood Wall",
+          "amount":3
+        },"Wood Doorway","Metal Door","Wood Foundation","Wood Storage Box","Camp Fire","Furnace"],
+      "description":"Start building!"
+    }
+  },
+  "command":"kit",
+  "messages":{
+    "nokitdefined":"No kit available!",
+    "received":"Buff! %user% gave you a %kit%!",
+    "githelp":"Get your kits! Type /kit to get started",
+    "exceeded":"Already redeemed %kit% maximum %amount% times!",
+    "redeem":"Kit %kit% redeemed!",
+    "broadcast":"Get your kits! Type /kit to get started",
+    "given":"Kit %kit% given to %user%!",
+    "nogiveyourself":"You cannot give %kit% yourself!",
+    "cooldown":"You have to wait %min% minutes and %sec%s seconds for %kit% to be available!"
+  },
+  "columns":0
+}

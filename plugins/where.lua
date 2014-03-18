@@ -1,5 +1,7 @@
 PLUGIN.Title = "Where Mod"
 PLUGIN.Description = "Allows players to get their location and direction"
+PLUGIN.Author = "none"
+PLUGIN.Version = "0.0.0"
  
 --Server initialization of the plugin
 function PLUGIN:Init()

@@ -102,7 +102,7 @@ function PLUGIN:Init()
 	self:AddOxminChatCommand( "timenight", { FLAG_CANTIME }, self.cmdTimenight )
 	self:AddOxminChatCommand( "admingear", { FLAG_CANADMINGEAR }, self.cmdAdminGear )
 	self:AddOxminChatCommand( "ahelp", { FLAG_CANAHELP }, self.cmdahelp )
-	self:AddOxminChatCommand( "notice", { FLAG_CANNOTICE }, self.cmdnotice )
+	self:AddOxminChatCommand( "notice", { FLAG_CANNOTICE }, self.cmdNotice )
 	
 	-- Add console commands
 	self:AddCommand( "oxmin", "giveflag", self.ccmdGiveFlag )
@@ -723,9 +723,21 @@ end
 -- *******************************************
 -- Broadcasts a Server Notification 
 -- *******************************************
-function PLUGIN:cmdNotice( netuser, cmd, args ) 
-		rust.RunServerCommand ( "notice.popupall" .. '"' .. args[1] .. '"' )
-		rust.SendChatToUser ( netuser, "Message Sent:" .. args[1] )
+function PLUGIN:cmdNotice( netuser, args )
+
+	if (not args[1]) then
+		rust.Notice( netuser, "Syntax: /notice Message" )
+		return
+	end
+  local allnetusers = rust.GetAllNetUsers()
+  if allnetusers then
+    for i=1, #allnetusers do
+      local netuser = allnetusers[i]
+	  local notice_msg = table.concat(args," ")
+      rust.Notice(netuser, notice_msg)
+      rust.SendChatToUser(netuser, "Message Sent:" .. notice_msg)
+    end
+  end
 end
 
 -- *******************************************
@@ -733,17 +745,17 @@ end
 -- *******************************************
 function PLUGIN:cmdTimeday( netuser, cmd, args )
 
-    local dayva = "env.time 10"
-    local daytext = "Time set to day"
+    local dayva = "env.time 8"
+    local daytext = "Time was set to day"
     rust.RunServerCommand (dayva)
-    rust.BroadcastChat (daytext)
+    rust.Notice (daytext)
 end
 function PLUGIN:cmdTimenight( netuser, cmd, args )
 
-    local nightva = "env.time 23"
-    local nighttext = "Time set to night"
+    local nightva = "env.time 20"
+    local nighttext = "Time was set to night"
     rust.RunServerCommand (nightva)
-    rust.BroadcastChat (nighttext)
+    rust.Notice (nighttext)
 end
 
 -- *******************************************
