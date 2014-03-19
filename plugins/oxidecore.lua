@@ -7,7 +7,7 @@
 PLUGIN.Title = "Oxide Core"
 PLUGIN.Description = "Abstracts many hooks into a much improved API for other plugins to use"
 PLUGIN.Author = "thomasfn"
-PLUGIN.Version = "1.17"
+PLUGIN.Version = "1.17.3"
 
 -- Load some enums
 typesystem.LoadEnum( Rust.NetError, "NetError" )
